@@ -18,7 +18,7 @@ import Dashboard from './Components/Dashboard';
 function App() {
     return (
         <BrowserRouter>
-            {/* <Header /> */}
+            <Header />
             <Box style={{ marginTop: 60 }}>
                 <Routes>
                     <Route exact path='/' element={<Dashboard />} />

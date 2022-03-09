@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,6 +10,7 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 // import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -23,7 +24,7 @@ import LogoutIcon from '@material-ui/icons/ExitToApp';
 // import Orders from './ListProduct';
 import { useNavigate, Routes, Route } from 'react-router-dom';
 import AddGenres from './AddGenres';
-import { Avatar, Menu, MenuItem, Tooltip } from '@material-ui/core';
+import { Avatar, Button, Menu, MenuItem, Tooltip } from '@material-ui/core';
 // import ListProduct from './ListProduct';
 // import ListUser from './ListUser';
 
@@ -127,8 +128,8 @@ export default function Dashboard() {
     const classes = useStyles();
     const navigate = useNavigate();
 
-    const [open, setOpen] = React.useState(true);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [open, setOpen] = useState(true);
+    const [anchorEl, setAnchorEl] = useState(null);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -142,15 +143,26 @@ export default function Dashboard() {
         localStorage.removeItem('firstName')
         localStorage.removeItem('lastName')
         localStorage.removeItem('token')
-        navigate('/loginUser');
+        navigate('/');
+        setAnchorEl(null);
     }
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
+    const handleProfile = () => {
+        setAnchorEl(null);
+        navigate('/adduser');
+    };
+
+    const handleMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+        navigate('/');
     };
 
     return (
@@ -173,7 +185,39 @@ export default function Dashboard() {
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                         {localStorage.getItem('firstName')} {localStorage.getItem('lastName')}
                     </Typography>
-                    <Box sx={{ flexGrow: 0 }}>
+                    <div>
+                        <IconButton
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleMenu}
+                            color="inherit"
+                        >
+                            <AccountCircle />
+                        </IconButton>
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorEl}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                        >
+                            <MenuItem onClick={handleProfile}>Profile</MenuItem>
+                            <MenuItem onClick={handleClose}>Change Password</MenuItem>
+                            <MenuItem onClick={handleClose}>Dashboard</MenuItem>
+                            <MenuItem onClick={logout}>Logout</MenuItem>
+                        </Menu>
+                    </div>
+                    {/* <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -202,7 +246,7 @@ export default function Dashboard() {
                                 </MenuItem>
                             ))}
                         </Menu>
-                    </Box>
+                    </Box> */}
                     {/* <IconButton color="inherit" onClick={logout}>
                         <LogoutIcon />
                     </IconButton> */}
@@ -218,8 +262,10 @@ export default function Dashboard() {
                 <div className={classes.toolbarIcon}>
                     <IconButton onClick={handleDrawerClose}>
                         <ChevronLeftIcon />
+
                     </IconButton>
                 </div>
+                <Link><Button variant="contained" >Create Blog</Button></Link>
                 <Divider />
                 {/* <List><MainListItems /></List>
                 <Divider />

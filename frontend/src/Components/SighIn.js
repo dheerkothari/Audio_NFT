@@ -15,7 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { loginUser } from '../Service/api';
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 function Copyright() {
     return (
@@ -114,9 +114,9 @@ export default function SignIn() {
             navigate('/')
         }
         else {
+            console.log("data------------------", res.data);
             toast.error(res.data)
         }
-        console.log("data------------------", res.data);
         setLoading(false)
 
     }
