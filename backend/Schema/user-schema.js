@@ -16,6 +16,12 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
     },
+    picture: {
+        type: String,
+    },
+    audio: {
+        type: String,
+    },
     phone: {
         type: Number,
         minlength: 10,

@@ -1,5 +1,6 @@
 import User from '../Schema/user-schema.js';
 import bcrypt from "bcrypt";
+import crypto from "crypto"
 import constants from '../Constance/constance.js'
 import jwt from 'jsonwebtoken';
 let jwtKey = "jwt"
