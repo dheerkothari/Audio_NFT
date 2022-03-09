@@ -21,8 +21,9 @@ import LogoutIcon from '@material-ui/icons/ExitToApp';
 // import { MainListItems, secondaryListItems } from './listItems';
 // import Deposits from './Deposits';
 // import Orders from './ListProduct';
-import { useNavigate, Switch, Route } from 'react-router-dom';
+import { useNavigate, Routes, Route } from 'react-router-dom';
 import AddGenres from './AddGenres';
+import { Avatar, Menu, MenuItem, Tooltip } from '@material-ui/core';
 // import ListProduct from './ListProduct';
 // import ListUser from './ListUser';
 
@@ -120,10 +121,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const settings = ['Profile', 'Change Password', 'Dashboard', 'Logout'];
+
 export default function Dashboard() {
     const classes = useStyles();
     const navigate = useNavigate();
+
     const [open, setOpen] = React.useState(true);
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
+
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -138,6 +144,14 @@ export default function Dashboard() {
         localStorage.removeItem('token')
         navigate('/loginUser');
     }
+
+    const handleOpenUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
+    };
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
 
     return (
         <div className={classes.root}>
@@ -159,9 +173,39 @@ export default function Dashboard() {
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                         {localStorage.getItem('firstName')} {localStorage.getItem('lastName')}
                     </Typography>
-                    <IconButton color="inherit" onClick={logout}>
+                    <Box sx={{ flexGrow: 0 }}>
+                        <Tooltip title="Open settings">
+                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                            </IconButton>
+                        </Tooltip>
+                        <Menu
+                            sx={{ mt: '45px' }}
+                            id="menu-appbar"
+                            anchorEl={anchorElUser}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(anchorElUser)}
+                            onClose={handleCloseUserMenu}
+                        >
+                            {settings.map((setting, i) => (
+                                <MenuItem key={setting[i]} onClick={handleCloseUserMenu}>
+                                    {console.log("menu", setting)}
+                                    <Typography textAlign="center">{setting}</Typography>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box>
+                    {/* <IconButton color="inherit" onClick={logout}>
                         <LogoutIcon />
-                    </IconButton>
+                    </IconButton> */}
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -198,11 +242,11 @@ export default function Dashboard() {
                     </Paper>
                     </Grid>
                 </Grid>*/}
-                    {/* <Switch> */}
-                    {/* <Route path={["/addgenres", "/update-product/:id"]} exact component={AddGenres} /> */}
-                    {/* <Route path="/list-product" exact component={ListProduct} />
+                    <Routes>
+                        <Route path={"/addgenres"} exact element={<AddGenres />} />
+                        {/* <Route path="/list-product" exact component={ListProduct} />
                         <Route path="/list-user" exact component={ListUser} /> */}
-                    {/* </Switch> */}
+                    </Routes>
                     <Box pt={4}>
                         <Copyright />
                     </Box>

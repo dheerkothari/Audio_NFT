@@ -15,15 +15,13 @@ export const addUser = async (data) => {
 export const loginUser = async (data) => {
     try {
         console.log("api----", data);
-        await axios.post(`${URL}/loginuser`, data).then((result) => {
-            console.log("--------------", result);
-            return data;
-        })
-
+        const res = await axios.post(`${URL}/loginuser`, data)
+        return res;
     }
     catch (err) {
-        console.log("Error while loginuser API", err)
+        console.log("Error while loginuser API", err.response)
         toast.error(err)
+        return err.response;
     }
 }
 

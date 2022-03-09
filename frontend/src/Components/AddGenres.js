@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { NavLink, useHistory, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios'
 
 function Copyright() {
@@ -51,36 +51,35 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddGenres() {
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate();
     const { id } = useParams();
     const [data, setData] = useState({
         id: '',
-        pdt_name: '',
-        pdt_price: '',
-        pdt_brand: ''
+        title: '',
+        description: ''
     })
 
     const [loading, setLoading] = useState(false)
     const [fetching, setFetching] = useState(false)
 
-    useEffect(() => {
-        if (id) {
-            setFetching(true);
-            axios.get(`http://localhost:4000/api/product/getProduct/${id}`).then(({ data: { data } }) => {
-                const { _id, pdt_name, pdt_price, pdt_brand } = data || {};
-                setData({
-                    id: _id,
-                    pdt_name,
-                    pdt_price,
-                    pdt_brand,
-                });
-            }).catch((error) => {
-                alert(error);
-            }).finally(() => {
-                setFetching(false);
-            })
-        }
-    }, [id]);
+    // useEffect(() => {
+    //     if (id) {
+    //         setFetching(true);
+    //         axios.get(`http://localhost:4000/api/product/getProduct/${id}`).then(({ data: { data } }) => {
+    //             const { _id, pdt_name, pdt_price, pdt_brand } = data || {};
+    //             setData({
+    //                 id: _id,
+    //                 pdt_name,
+    //                 pdt_price,
+    //                 pdt_brand,
+    //             });
+    //         }).catch((error) => {
+    //             alert(error);
+    //         }).finally(() => {
+    //             setFetching(false);
+    //         })
+    //     }
+    // }, [id]);
 
     const handleChange = (event) => {
         setData({
@@ -99,7 +98,7 @@ export default function AddGenres() {
                     authorization: `bearer ${localStorage.getItem("token")}`
                 }
             }).then(({ data: { data } }) => {
-                history.push("/list-product");
+                navigate("/list-product");
             }).catch((error) => {
                 alert(error)
             }).finally(() => {
@@ -111,7 +110,7 @@ export default function AddGenres() {
                     authorization: `bearer ${localStorage.getItem("token")}`
                 }
             }).then(({ data: { data } }) => {
-                history.push("/list-product");
+                navigate("/list-product");
             }).catch((error) => {
                 alert(error)
             }).finally(() => {
@@ -131,11 +130,11 @@ export default function AddGenres() {
                         margin="normal"
                         required
                         fullWidth
-                        id="name"
-                        label="Product Name"
-                        name="pdt_name"
+                        id="title"
+                        label="Genre Title"
+                        name="title"
                         onChange={handleChange}
-                        value={data.pdt_name}
+                        value={data.title}
                         autoFocus
                     />
                     <TextField
@@ -143,15 +142,15 @@ export default function AddGenres() {
                         margin="normal"
                         required
                         fullWidth
-                        name="pdt_price"
+                        name="description"
                         onChange={handleChange}
-                        value={data.pdt_price}
-                        label="Product Price"
-                        type="price"
-                        id="price"
+                        value={data.description}
+                        label="Genre Description"
+                        // type="price"
+                        id="description"
                     //autoComplete="current-password"
                     />
-                    <TextField
+                    {/* <TextField
                         variant="outlined"
                         margin="normal"
                         required
@@ -161,7 +160,7 @@ export default function AddGenres() {
                         name="pdt_brand"
                         onChange={handleChange}
                         value={data.pdt_brand}
-                    />
+                    /> */}
                     { /*<FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"

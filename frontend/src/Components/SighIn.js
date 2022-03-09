@@ -109,10 +109,14 @@ export default function SignIn() {
         }
 
         setLoading(true)
-
-        await loginUser(data)
-        console.log("data------------------", data);
-        navigate('/')
+        const res = await loginUser(data)
+        if (res.status === 200) {
+            navigate('/')
+        }
+        else {
+            toast.error(res.data)
+        }
+        console.log("data------------------", res.data);
         setLoading(false)
 
     }
