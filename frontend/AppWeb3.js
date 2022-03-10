@@ -129,26 +129,26 @@ const App = () => {
         // let x = BigNumber(senderValue)
         const instance = await poolMethods.getInstance(web3)
         console.log("instance from set", instance);
-        if (instance) {
-            // console.log(`The value you entered is: ${senderValue}`);
-            let registrationresponse = await poolMethods.registration(instance, currentAccount, id, parseInt(status), name)
-            console.log(registrationresponse, "***********--------------res")
+        // if (instance) {
+        //     // console.log(`The value you entered is: ${senderValue}`);
+        //     let registrationresponse = await poolMethods.registration(instance, currentAccount, id, parseInt(status), name)
+        //     console.log(registrationresponse, "***********--------------res")
 
-            let appcandidateresponse = await poolMethods.approveCandidate(instance, currentAccount, '0x2f1CB419Fa0e05A79Ca50D21832a590727B51eCb')
-            console.log(appcandidateresponse, "***********--------------res")
+        //     let appcandidateresponse = await poolMethods.approveCandidate(instance, currentAccount, '0x2f1CB419Fa0e05A79Ca50D21832a590727B51eCb')
+        //     console.log(appcandidateresponse, "***********--------------res")
 
-            // if (response) {
-            //   await poolMethods.getOwner(instance, currentAccount).then((result) => {
-            //     console.log(result, "***********--------------result");
-            //     setGetData(result);
-            //     // props.setGetData(senderValue);
-            //   })
-            // }
+        //     // if (response) {
+        //     //   await poolMethods.getOwner(instance, currentAccount).then((result) => {
+        //     //     console.log(result, "***********--------------result");
+        //     //     setGetData(result);
+        //     //     // props.setGetData(senderValue);
+        //     //   })
+        //     // }
 
 
-        } else {
-            console.log("setmethod===error")
-        }
+        // } else {
+        //     console.log("setmethod===error")
+        // }
         setId("");
         setStatus("");
         setName("");

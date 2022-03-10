@@ -22,9 +22,10 @@ import LogoutIcon from '@material-ui/icons/ExitToApp';
 // import { MainListItems, secondaryListItems } from './listItems';
 // import Deposits from './Deposits';
 // import Orders from './ListProduct';
-import { useNavigate, Routes, Route } from 'react-router-dom';
+import { useNavigate, Routes, Route, Outlet } from 'react-router-dom';
 import AddGenres from './AddGenres';
 import { Avatar, Button, Menu, MenuItem, Tooltip } from '@material-ui/core';
+import Genres from './Genres';
 // import ListProduct from './ListProduct';
 // import ListUser from './ListUser';
 
@@ -265,7 +266,7 @@ export default function Dashboard() {
 
                     </IconButton>
                 </div>
-                <Link><Button variant="contained" >Create Blog</Button></Link>
+                <Link href='/addgenres'><Button variant="contained" >Create Genre</Button></Link>
                 <Divider />
                 {/* <List><MainListItems /></List>
                 <Divider />
@@ -288,11 +289,16 @@ export default function Dashboard() {
                     </Paper>
                     </Grid>
                 </Grid>*/}
-                    <Routes>
-                        <Route path={"/addgenres"} exact element={<AddGenres />} />
-                        {/* <Route path="/list-product" exact component={ListProduct} />
+
+                    <Grid container item lg={10} xs={12} sm={10}>
+                        <Genres />
+                    </Grid>
+                    <Outlet />
+                    {/* <Routes> */}
+                    {/* <Route path={"/addgenres"} exact element={<AddGenres />} /> */}
+                    {/* <Route path="/list-product" exact component={ListProduct} />
                         <Route path="/list-user" exact component={ListUser} /> */}
-                    </Routes>
+                    {/* </Routes> */}
                     <Box pt={4}>
                         <Copyright />
                     </Box>

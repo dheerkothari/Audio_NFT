@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -17,7 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { FormControl, InputLabel } from '@material-ui/core';
-import { addUser } from '../Service/api';
+import { addUser, getUser } from '../Service/api';
 
 function Copyright() {
     return (
@@ -81,6 +81,12 @@ export default function SignUp() {
         setLoading(false)
     }
 
+    useEffect(async () => {
+        const data = await getUser()
+        console.log("1111111111111", data);
+        setData(data.user[0])
+    }, [])
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -131,6 +137,7 @@ export default function SignUp() {
                                 onChange={handleChange}
                                 autoComplete="email"
                                 value={data.email}
+                                disabled
                             />
                         </Grid>
                         <Grid item xs={12}>

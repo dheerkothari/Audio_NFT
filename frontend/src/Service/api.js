@@ -12,6 +12,17 @@ export const addUser = async (data) => {
     }
 }
 
+export const getUser = async (data) => {
+    try {
+        let response = await axios.get(`${URL}/getuser`)
+        // return await axios.get(`${URL}/getUser`, data)
+        return response.data;
+    }
+    catch (err) {
+        console.log("Error while addUser API", err)
+    }
+}
+
 export const loginUser = async (data) => {
     try {
         console.log("api----", data);
@@ -27,6 +38,7 @@ export const loginUser = async (data) => {
 
 export const addGenres = async (data) => {
     try {
+        console.log(data);
         return await axios.post(`${URL}/addgenres`, data)
     }
     catch (err) {

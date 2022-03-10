@@ -71,6 +71,7 @@ export default function SignIn() {
                 return !value ? 'Email is required' : !/^[A-Za-z\d\.\_\-\+]{2,64}\@([A-Za-z\d\-\_]{1,256})\.[A-Za-z\d]+(.[A-Za-z\d]+)?$/.test(value) ? 'Email is invalid' : '';
             case 'password':
                 return !value ? 'Password is required' : value.length < 3 ? 'Minimum 8 characters are required' : '';
+            // return !value ? 'Password is required' : /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value) ? 'Minimum 8 characters are required' : '';
             default:
                 return '';
         }
