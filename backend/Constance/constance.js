@@ -9,10 +9,14 @@ const http_code = {
 
 const MESSAGES = {
     addUser: "User added successfully",
+    noUser: "User not found",
+    email: "Check your email",
+    password: "Password updated successfully",
     addGenres: "Genres added successfully",
     loginUser: "Login Successfully",
     getAllGenres: "Get all genres",
     getGenres: "Getting genres",
+    getUser: "Getting user",
     updateGenre: "Genre updated successfully",
     deleteGenre: "Genre deleted successfully"
 }

@@ -1,4 +1,4 @@
-import Genres from '../Schema/user-schema.js';
+import Genres from '../Schema/genres-schema.js';
 import constants from '../Constance/constance.js'
 
 export const addGenres = async (req, res) => {
@@ -24,8 +24,10 @@ export const getAllGenres = async (req, res) => {
         if (username) {
             genres = await Genres.find({ username: username });
         }
-        else
-            genres = await Genres.find({})
+        else {
+            genres = await Genres.find()
+            console.log(genres);
+        }
 
         res.status(200).json({
             statusCode: constants.code.ok,

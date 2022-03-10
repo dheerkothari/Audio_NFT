@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
+        minlength: 8
     },
     picture: {
         type: String,
@@ -37,7 +38,9 @@ const userSchema = new mongoose.Schema({
     },
     token: {
         type: String
-    }
+    },
+    resetToken: String,
+    expireToken: Date
     // gender: {
     // 	type: String,
     // 	default: 'Not selected'

@@ -7,12 +7,15 @@ const upload = multer({ storage: storage })
 import { addGenres, deleteGenre, getAllGenres, getGenres, updateGenre } from '../Controller/genres-controller.js';
 import storage, { uploadImage } from '../Controller/image-controller.js';
 
-import { addUser, loginUser } from '../Controller/user-controller.js';
+import { addUser, getUser, loginUser, newPassword, resetPassword } from '../Controller/user-controller.js';
 
 const router = express.Router();
 
 router.post('/adduser', addUser)
 router.post('/loginuser', loginUser)
+router.post('/resetpassword', resetPassword)
+router.post('/newpassword', newPassword)
+router.get('/getuser', getUser)
 
 router.post('/addgenres', addGenres)
 router.get('/genres', getAllGenres)

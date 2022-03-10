@@ -37,6 +37,21 @@ export const addUser = async (req, res) => {
     }
 }
 
+export const getUser = async (req, res) => {
+    try {
+        let user = await User.find()
+
+        res.status(200).json({
+            statusCode: constants.code.ok,
+            statusMessaage: constants.message.getUser,
+            user
+        });
+
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
 export const loginUser = async (req, res) => {
 
     var email = req.body.email;
@@ -87,22 +102,79 @@ export const loginUser = async (req, res) => {
 
 export const resetPassword = async (req, res) => {
 
-    var oldPassword = req.body.password;
-    var id = req.params.id
-
-    try {
-        const checkPassword = await bcrypt.compare(password, oldPassword)
-
-        if (checkPassword) {
-            await User.updateOne({ password: req.body.password })
+    crypto.randomBytes(32, (err, buffer) => {
+        if (err) {
+            console.log(err);
         }
+        const token = buffer.toString("hex")
+        User.findOne({ email: req.body.email })
+            .then(user => {
+                if (!user) {
+                    return res.status(404).json({
+                        statusCode: constants.code.dataNotFound,
+                        statusMessage: constants.message.noUser
+                    })
+                }
+                user.resetToken = token
+                user.expireToken = Date.now() + 360000
+                user.save().then((result) => {
+                    transporter.sendMail({
+                        to: user.email,
+                        from: "no-reply@web.com",
+                        subject: "Password Reset",
+                        html: `
+                            <p>You are requested for reset password</p>
+                            <h5>Click this <a href="http://localhost:3000/resetpassword/${token}" >link</a></h5>
+                            `
+                    })
+                    res.json({ statusMessage: constants.message.email })
+                })
 
-    } catch (err) {
-        res.status(500).json(error)
-    }
-
-
+            })
+    })
 }
+
+export const newPassword = async (req, res) => {
+
+    const newPassword = req.body.password
+    const sentToken = req.body.token
+    User.findOne({ resetToken: sentToken, expireToken: { $gt: Date.now() } })
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({
+                    statusCode: constants.code.dataNotFound,
+                    statusMessage: constants.message.noUser
+                })
+            }
+            bcrypt.hash(newPassword, 12).then(hashedPassword => {
+                user.password = hashedPassword
+                user.resetToken = undefined
+                user.expireToken = undefined
+                user.save().then((saveduser) => {
+                    res.json({ statusMessage: constants.message.password })
+                })
+            })
+        }).catch(err => {
+            console.log(err);
+        })
+}
+
+// export const resetPassword = async (req, res) => {
+
+//     var oldPassword = req.body.password;
+//     var id = req.params.id
+
+//     try {
+//         const checkPassword = await bcrypt.compare(password, oldPassword)
+
+//         if (checkPassword) {
+//             await User.updateOne({ password: req.body.password })
+//         }
+
+//     } catch (err) {
+//         res.status(500).json(error)
+//     }
+// }
 
 // function resetPassword(id, oldPassword, newPassword) {
 //     if (!id || !ObjectId.isValid(id) || !oldPassword || !newPassword) {
