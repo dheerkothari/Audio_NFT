@@ -32,10 +32,10 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
     },
-    metamaskAddress: {
-        type: String,
-        unique: true
-    },
+    // metamaskAddress: {
+    //     type: String,
+    //     unique: true
+    // },
     token: {
         type: String
     },

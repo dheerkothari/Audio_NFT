@@ -159,6 +159,20 @@ export const newPassword = async (req, res) => {
         })
 }
 
+export const countUser = async (req, res) => {
+    try {
+        const result = await User.find({ role: "ARTIST" }).countDocuments();
+        console.log(result);
+        res.status(200).json({
+            statusCode: constants.code.ok,
+            statusMessaage: constants.message.getUser,
+            result
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 // export const resetPassword = async (req, res) => {
 
 //     var oldPassword = req.body.password;

@@ -14,6 +14,8 @@ const MESSAGES = {
     password: "Password updated successfully",
     addGenres: "Genres added successfully",
     loginUser: "Login Successfully",
+    userCount: "User count successfully",
+    genresCount: "Genres count successfully",
     getAllGenres: "Get all genres",
     getGenres: "Getting genres",
     getUser: "Getting user",

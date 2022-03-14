@@ -26,7 +26,6 @@ export const getAllGenres = async (req, res) => {
         }
         else {
             genres = await Genres.find()
-            console.log(genres);
         }
 
         res.status(200).json({
@@ -81,5 +80,19 @@ export const deleteGenre = async (req, res) => {
 
     } catch (error) {
         res.status(500).json(error)
+    }
+}
+
+export const countGenre = async (req, res) => {
+    try {
+        const result = await Genres.find().countDocuments();
+        console.log(result);
+        res.status(200).json({
+            statusCode: constants.code.ok,
+            statusMessaage: constants.message.getUser,
+            result
+        });
+    } catch (err) {
+        console.log(err);
     }
 }
