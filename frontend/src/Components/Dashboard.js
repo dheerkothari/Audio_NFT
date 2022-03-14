@@ -123,8 +123,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const settings = ['Profile', 'Change Password', 'Dashboard', 'Logout'];
-
 export default function Dashboard() {
     const classes = useStyles();
     const navigate = useNavigate();
