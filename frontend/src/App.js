@@ -7,12 +7,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 //components
 import Header from './Components/Header';
-import SignUp from './Components/SighUp';
-import SignIn from './Components/SighIn';
+import SignUp from './Components/SignUp';
+import SignIn from './Components/SignIn';
 import Dashboard from './Components/Dashboard';
 import CreateView from './Components/Genre/CreateView';
 import DetailView from './Components/Genre/DetailsView';
 import UpdateView from './Components/Genre/UpdateView';
+// import State from './Components/State';
 
 function App() {
     return (
@@ -26,9 +27,10 @@ function App() {
                     <Route exact path='/update/:id' element={<UpdateView />} />
                     <Route exact path='/adduser' element={<SignUp />} />
                     <Route exact path='/loginUser' element={<SignIn />} />
+                    {/* <Route exact path='/' element={<State />} /> */}
                 </Routes>
             </Box>
-        </BrowserRouter >
+        </BrowserRouter>
     )
 }
 

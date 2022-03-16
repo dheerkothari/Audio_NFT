@@ -2,8 +2,8 @@ import React from 'react';
 import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 // import AddProduct from './pages/AddProduct';
 import Dashboard from './Components/Dashboard';
-import SignIn from './Components/SighIn';
-import SignUp from './Components/SighUp';
+import SignIn from './Components/SignIn';
+import SignUp from './Components/SignUp';
 
 const PrivateRoute = (props) => {
   const token = localStorage.getItem('token');
