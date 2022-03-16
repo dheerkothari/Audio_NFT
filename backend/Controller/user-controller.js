@@ -58,7 +58,6 @@ export const loginUser = async (req, res) => {
     var password = req.body.password;
 
     try {
-        console.log(req.body);
         let getUser = await User.findOne({ email: email })
 
         if (!getUser) {
@@ -66,14 +65,13 @@ export const loginUser = async (req, res) => {
         }
 
         else {
+
             const checkPassword = await bcrypt.compare(password, getUser.password)
-            console.log("getUser---", getUser);
-            console.log("checkPassword---", checkPassword);
 
             if (checkPassword === true) {
 
                 try {
-                    const token = await jwt.sign({ getUser }, jwtKey);
+                    const token = await jwt.sign({ getUser: getUser.email }, jwtKey, { expiresIn: '300s' });
 
                     if (getUser.token.length <= 0)
                         await User.updateOne({ email: email }, { token: token })
@@ -168,6 +166,35 @@ export const countUser = async (req, res) => {
             statusMessaage: constants.message.getUser,
             result
         });
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export const verifyToken = async (req, res, next) => {
+    try {
+        const bearerHeader = req.headers['authorization'];
+
+        if (typeof bearerHeader !== 'undefined') {
+
+            const bearer = bearerHeader.split(' ')
+
+            req.token = bearer[1]
+
+            jwt.verify(req.token, jwtKey, (err, authData) => {
+                console.log(req.token);
+                console.log("jwtKey-----", jwtKey);
+                if (err) {
+                    res.json({ result: err })
+                }
+                else {
+                    next();
+                }
+            })
+        }
+        else {
+            res.send({ "result": "Token not provided" })
+        }
     } catch (err) {
         console.log(err);
     }
